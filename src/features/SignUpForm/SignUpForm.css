@@ -1,0 +1,83 @@
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #166FC1;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input,
+select {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px;
+  border-radius: 3px;
+  background-color: #166FC1;
+  color: #fff;
+  border: none;
+  cursor: pointer;  
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #13518e;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.disabled-button {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.login-content {
+  display: flex;
+  align-items: center;
+}
+.login-image {
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+.container-title {
+  color: #166FC1;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.container .back-button {
+  margin-top: 20px;
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.container .button-wrapper {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.container .button-wrapper button {
+  flex: 1;
+}

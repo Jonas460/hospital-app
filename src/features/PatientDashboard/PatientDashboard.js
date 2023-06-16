@@ -1,37 +1,57 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteUser } from "../../features/LoginForm/redux/authActions";
+import "./PatientDashboard.css";
 
 const PatientDashboard = () => {
-  const [medicalRecords, setMedicalRecords] = useState([]);
+  const dispatch = useDispatch();
+  const doctor = useSelector((state) => state.user?.user);
+  const [searchQuery, setSearchQuery] = useState("");
+  const medicalRecords = useSelector(
+    (state) => state.user?.user?.patients || []
+  );
 
-  useEffect(() => {
-    // Implemente a lógica para buscar as fichas médicas do paciente no backend
-    // Atualize o estado 'medicalRecords' com as fichas obtidas
-    const fetchMedicalRecords = async () => {
-      try {
-        // Faça uma requisição para o backend e obtenha as fichas médicas do paciente
-        const response = await fetch("/api/medical-records");
-        const data = await response.json();
-        setMedicalRecords(data);
-      } catch (error) {
-        console.error("Erro ao buscar as fichas médicas:", error);
-      }
-    };
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
-    fetchMedicalRecords();
-  }, []);
+  const filteredRecords = medicalRecords.filter((record) =>
+    record.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleDelete = async (id) => {
+    dispatch(deleteUser(id));
+  };
 
   return (
-    <div>
-      <h2>Minhas Fichas Médicas</h2>
-      {medicalRecords.map((record) => (
-        <div key={record.id}>
-          <h3>{record.fullName}</h3>
-          <p>CPF: {record.cpf}</p>
-          <p>Telefone: {record.phone}</p>
-          <p>Endereço: {record.address}</p>
-          {/* Adicione aqui os outros campos da ficha médica */}
-        </div>
-      ))}
+    <div className="patient-dashboard">
+      <h2 className="dashboard-title">Dr {doctor.name} - Fichas Médicas</h2>
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Pesquisar"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+      </div>
+      <div className="patient-container">
+        {filteredRecords.map((record) => (
+          <div key={record.id} className="patient-card">
+            <h3>{record.name}</h3>
+            <p>CPF: {record.cpf}</p>
+            <p>Telefone: {record.phone}</p>
+            <p>Endereço: {record.address}</p>
+
+            <button className="edit-button">Editar</button>
+            <button
+              className="delete-button"
+              onClick={() => handleDelete(record.id)}
+            >
+              Excluir
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
