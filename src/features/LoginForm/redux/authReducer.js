@@ -28,6 +28,11 @@ const authReducer = (state = initialState, action) => {
         ...state,
         message: action.payload,
       };
+    case "EDIT_USER":
+      return {
+        ...state,
+        message: action.payload,
+      };
     case "UPDATE":
       return {
         ...state,

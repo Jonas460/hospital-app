@@ -28,7 +28,23 @@ export const deleteUser = (userId) => {
 
 export const updateUser = () => {
   return async (dispatch) => {
-    dispatch(deleteUserSuccess());
+    dispatch(updateUserLogin());
+  };
+};
+
+export const editUser = (name, email, password, cellPhone, userId) => {
+  return async (dispatch) => {
+    try {
+      const response = await api.post(`/edit/user/${userId}`, {
+        name,
+        email,
+        password,
+        cellPhone,
+      });
+      dispatch(editUserSuccess(response.data));
+    } catch (error) {
+      dispatch(loginError(error.message));
+    }
   };
 };
 
@@ -76,6 +92,13 @@ export const loginError = (error) => {
 export const createUserSuccess = (message) => {
   return {
     type: "CREATE_USER",
+    payload: message,
+  };
+};
+
+export const editUserSuccess = (message) => {
+  return {
+    type: "EDIT_USER",
     payload: message,
   };
 };
